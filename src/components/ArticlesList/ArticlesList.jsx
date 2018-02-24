@@ -2,27 +2,23 @@
 import React, { Component } from 'react'
 // eslint-disable-next-line
 import Article from '../Article/Article'
-import Axios from 'axios'
+import accordion from '../../decorators/accordion'
 
-export default class ArticlesList extends Component {
-  constructor () {
-    super()
-    this.state = {
-      db: ['']
-    }
-  }
-  componentWillMount () {
-    Axios.get('./db.json')
-      .then(res => this.setState({db: res.data}))
-  }
+class ArticlesList extends Component {
   render () {
-    const db = this.state.db
+    const db = this.props.db
+    const {openItemId, toggleOpenItem} = this.props
     return (
       <div className='ArticlesList'>
-        {db.map(function (article, index) {
-          return <Article key={`${Math.random()}+${index}`} article={article}/>
+        {db.map((article, index) => {
+          return <Article key={`${article.id}`} article={article}
+          isOpen = {article.id === openItemId}
+          toggleOpen = {toggleOpenItem(article.id)}
+          />
         })}
       </div>
     )
   }
 }
+
+export default accordion(ArticlesList)

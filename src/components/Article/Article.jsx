@@ -1,20 +1,13 @@
 // eslint-disable-next-line
 import React, { Component } from 'react'
 
-export default class ArticlesList extends Component {
-  constructor (props) {
-    super (props)
-    this.state = {
-      isOpen: false
-    }
-  }
+class Article extends Component {
   render () {
-    const {article} = this.props
-    const {isOpen} = this.state
+    const {article, isOpen, toggleOpen} = this.props
     return (
       <div className='Article'>
         <div>{article.title}</div>
-        <button onClick={this.toggleOpen}>
+        <button onClick={toggleOpen}>
           {isOpen ? 'close' : 'open'}
         </button>
         {this.getBody()}
@@ -22,13 +15,11 @@ export default class ArticlesList extends Component {
     )
   }
   getBody () {
-  if (!this.state.isOpen) return null
-  const {article} = this.props
+  const {article, isOpen} = this.props
+  if (!isOpen) return null
   return <section>{article.text}</section>
-}
-  toggleOpen = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-      })
   }
+
 }
+
+export default Article
